@@ -27,6 +27,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "jet-app-supervision-gxzh.fullname" . }}
+            - configMapRef:
+                name: {{ include "jet-app-supervision-gxzh.fullname" . }}-action-list
           ports:
             - name: http
               containerPort: 80
