@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "jet-app-supervision-gxzh.fullname" . }}
+  name: {{ include "jet-supervision-helm-chart.fullname" . }}
   labels:
-    {{- include "jet-app-supervision-gxzh.labels" . | nindent 4 }}
+    {{- include "jet-supervision-helm-chart.labels" . | nindent 4 }}
 data:
   BASE_URL: {{ .Values.baseUrl }}
   SENTRY_DSN: {{ .Values.sentryDsn | quote }}

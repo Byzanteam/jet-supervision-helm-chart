@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "jet-app-supervision-gxzh.fullname" . }}
+  name: {{ include "jet-supervision-helm-chart.fullname" . }}
   labels:
-    {{- include "jet-app-supervision-gxzh.labels" . | nindent 4 }}
+    {{- include "jet-supervision-helm-chart.labels" . | nindent 4 }}
 spec:
   type: ClusterIP
   ports:
@@ -12,5 +12,5 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "jet-app-supervision-gxzh.selectorLabels" . | nindent 4 }}
-    app: {{ template "jet-app-supervision-gxzh.fullname" . }}
+    {{- include "jet-supervision-helm-chart.selectorLabels" . | nindent 4 }}
+    app: {{ template "jet-supervision-helm-chart.fullname" . }}

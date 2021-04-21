@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "jet-app-supervision-gxzh.fullname" . }}
+  name: {{ include "jet-supervision-helm-chart.fullname" . }}
   labels:
-    {{- include "jet-app-supervision-gxzh.labels" . | nindent 4 }}
-    app: {{ include "jet-app-supervision-gxzh.fullname" . }}
+    {{- include "jet-supervision-helm-chart.labels" . | nindent 4 }}
+    app: {{ include "jet-supervision-helm-chart.fullname" . }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "jet-app-supervision-gxzh.selectorLabels" . | nindent 6 }}
+      {{- include "jet-supervision-helm-chart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "jet-app-supervision-gxzh.selectorLabels" . | nindent 8 }}
-        app: {{ template "jet-app-supervision-gxzh.fullname" . }}
+        {{- include "jet-supervision-helm-chart.selectorLabels" . | nindent 8 }}
+        app: {{ template "jet-supervision-helm-chart.fullname" . }}
     spec:
       {{- with .Values.image.imagePullSecrets }}
       imagePullSecrets:
@@ -22,13 +22,13 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ include "jet-app-supervision-gxzh.image" . }}
+          image: {{ include "jet-supervision-helm-chart.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - configMapRef:
-                name: {{ include "jet-app-supervision-gxzh.fullname" . }}
+                name: {{ include "jet-supervision-helm-chart.fullname" . }}
             - configMapRef:
-                name: {{ include "jet-app-supervision-gxzh.fullname" . }}-action-list
+                name: {{ include "jet-supervision-helm-chart.fullname" . }}-action-list
           ports:
             - name: http
               containerPort: 80

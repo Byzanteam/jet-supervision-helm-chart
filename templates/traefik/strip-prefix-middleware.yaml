@@ -1,7 +1,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: {{ include "jet-app-supervision-gxzh.fullname" . }}-strip-prefix
+  name: {{ include "jet-supervision-helm-chart.fullname" . }}-strip-prefix
 spec:
   stripPrefix:
     prefixes:

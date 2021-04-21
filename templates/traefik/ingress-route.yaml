@@ -1,7 +1,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ include "jet-app-supervision-gxzh.fullname" . }}
+  name: {{ include "jet-supervision-helm-chart.fullname" . }}
 spec:
   entryPoints:
     - web
@@ -10,16 +10,16 @@ spec:
     - match: Host(`{{ .Values.supervisionHost }}`) && PathPrefix(`{{ .Values.baseUrl }}`)
       kind: Rule
       middlewares:
-        - name: {{ include "jet-app-supervision-gxzh.fullname" . }}-compress
+        - name: {{ include "jet-supervision-helm-chart.fullname" . }}-compress
       services:
-        - name: {{ include "jet-app-supervision-gxzh.fullname" . }}
+        - name: {{ include "jet-supervision-helm-chart.fullname" . }}
           port: 80
     - match: Host(`{{ .Values.supervisionHost }}`) && PathPrefix(`/jet-supervision`)
       kind: Rule
       middlewares:
-        - name: {{ include "jet-app-supervision-gxzh.fullname" . }}-compress
-        - name: {{ include "jet-app-supervision-gxzh.fullname" . }}-strip-prefix
+        - name: {{ include "jet-supervision-helm-chart.fullname" . }}-compress
+        - name: {{ include "jet-supervision-helm-chart.fullname" . }}-strip-prefix
       services:
-        - name: {{ include "jet-app-supervision-gxzh.fullname" . }}
+        - name: {{ include "jet-supervision-helm-chart.fullname" . }}
           port: 80
-{{- include "jet-app-supervision-gxzh.tls-options" . | nindent 2 }}
+{{- include "jet-supervision-helm-chart.tls-options" . | nindent 2 }}

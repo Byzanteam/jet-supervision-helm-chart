@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "jet-app-supervision-gxzh.name" -}}
+{{- define "jet-supervision-helm-chart.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "jet-app-supervision-gxzh.fullname" -}}
+{{- define "jet-supervision-helm-chart.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "jet-app-supervision-gxzh.chart" -}}
+{{- define "jet-supervision-helm-chart.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "jet-app-supervision-gxzh.labels" -}}
-helm.sh/chart: {{ include "jet-app-supervision-gxzh.chart" . }}
-{{ include "jet-app-supervision-gxzh.selectorLabels" . }}
+{{- define "jet-supervision-helm-chart.labels" -}}
+helm.sh/chart: {{ include "jet-supervision-helm-chart.chart" . }}
+{{ include "jet-supervision-helm-chart.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,15 +45,15 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "jet-app-supervision-gxzh.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "jet-app-supervision-gxzh.name" . }}
+{{- define "jet-supervision-helm-chart.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "jet-supervision-helm-chart.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Return the proper image name
 */}}
-{{- define "jet-app-supervision-gxzh.image" }}
+{{- define "jet-supervision-helm-chart.image" }}
 {{- $registryName := .Values.image.registry -}}
 {{- $repositoryName := .Values.image.repository -}}
 {{- $tag := .Values.image.tag | toString -}}
@@ -63,7 +63,7 @@ Return the proper image name
 {{/*
 Return the proper tls config for supervision
 */}}
-{{- define "jet-app-supervision-gxzh.tls-options" }}
+{{- define "jet-supervision-helm-chart.tls-options" }}
 {{- if .Values.supervisionTLSSecret | empty | not }}
 tls:
   secretName: {{ .Values.supervisionTLSSecret }}

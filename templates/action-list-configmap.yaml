@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "jet-app-supervision-gxzh.fullname" . }}-action-list
+  name: {{ include "jet-supervision-helm-chart.fullname" . }}-action-list
   labels:
-    {{- include "jet-app-supervision-gxzh.labels" . | nindent 4 }}
+    {{- include "jet-supervision-helm-chart.labels" . | nindent 4 }}
 data:
   action-list.env: |-
 {{ .Files.Get "action-list.env" | indent 4 }}
