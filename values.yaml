@@ -27,6 +27,10 @@ resources: {}
 nodeSelector: {}
 
 # Application
+supervisionHost: supervision.jet.localhost
+supervisionTLSSecret:
+
+# Frontend environments
 baseUrl: /
 sentryDsn: ""
 jetHost: workflow.jet.work

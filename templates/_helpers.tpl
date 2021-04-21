@@ -59,3 +59,13 @@ Return the proper image name
 {{- $tag := .Values.image.tag | toString -}}
 {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
 {{- end }}
+
+{{/*
+Return the proper tls config for supervision
+*/}}
+{{- define "jet-app-supervision-gxzh.tls-options" }}
+{{- if .Values.supervisionTLSSecret | empty | not }}
+tls:
+  secretName: {{ .Values.supervisionTLSSecret }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,25 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "jet-app-supervision-gxzh.fullname" . }}
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`{{ .Values.supervisionHost }}`)
+      kind: Rule
+      middlewares:
+        - name: {{ include "jet-app-supervision-gxzh.fullname" . }}-compress
+      services:
+        - name: {{ include "jet-app-supervision-gxzh.fullname" . }}
+          port: 80
+    - match: Host(`{{ .Values.supervisionHost }}`) && PathPrefix(`/jet-supervision`)
+      kind: Rule
+      middlewares:
+        - name: {{ include "jet-app-supervision-gxzh.fullname" . }}-compress
+        - name: {{ include "jet-app-supervision-gxzh.fullname" . }}-strip-prefix
+      services:
+        - name: {{ include "jet-app-supervision-gxzh.fullname" . }}
+          port: 80
+{{- include "jet-app-supervision-gxzh.tls-options" . | nindent 2 }}
