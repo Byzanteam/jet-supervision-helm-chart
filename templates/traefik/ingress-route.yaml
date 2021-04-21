@@ -7,7 +7,7 @@ spec:
     - web
     - websecure
   routes:
-    - match: Host(`{{ .Values.supervisionHost }}`)
+    - match: Host(`{{ .Values.supervisionHost }}`) && PathPrefix(`{{ .Values.baseUrl }}`)
       kind: Rule
       middlewares:
         - name: {{ include "jet-app-supervision-gxzh.fullname" . }}-compress
