@@ -33,8 +33,15 @@ jetSSL: true
 
 ### make install
 ```bash
-make install
+# set release-name in `.env` file
 
-# (optional) set release-name
-make install RELEASE=release-name
+# .env
+RELEASE=gxzh
+
+make install
+```
+
+```bash
+# set release-name
+make install RELEASE=gxzh
 ```
