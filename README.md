@@ -23,7 +23,7 @@ imageCredentials:
 # values.local.yaml
 
 image:
-  repository: jet-app/supervision-gxzh
+  repository: jet/jet-supervision-app
   tag: "latest"
   pullPolicy: IfNotPresent
 ```
