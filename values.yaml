@@ -35,6 +35,7 @@ supervisionHost: supervision.jet.localhost
 supervisionTLSSecret:
 
 # Frontend environments
+applicationName: 督查督办
 baseUrl: /
 sentryDsn: ""
 jetHost: workflow.jet.work
