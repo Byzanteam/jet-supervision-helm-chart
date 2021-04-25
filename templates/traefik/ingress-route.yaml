@@ -1,25 +1,59 @@
+{{- $rules := list }}
+{{- $rules = append $rules (printf "Host(`%s`) && PathPrefix(`%s`)" .Values.supervisionHost .Values.baseUrl) }}
+{{- $rules = append $rules (printf "Host(`%s`) && PathPrefix(`/jet-supervision`)" .Values.supervisionHost) }}
+
+{{/*
+Return the common middlewares for web ingress-routes
+*/}}
+{{- define "web-middlewares" -}}
+middlewares:
+{{- if .Values.supervisionTLSSecret | empty }}
+  - name: {{ include "jet-supervision-helm-chart.fullname" . }}-strip-prefix
+  - name: {{ include "jet-supervision-helm-chart.fullname" . }}-compress
+{{- else }}
+  - name: {{ include "jet-supervision-helm-chart.fullname" . }}-redirect-to-https
+{{- end }}
+{{- end }}
+
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ include "jet-supervision-helm-chart.fullname" . }}
+  name: {{ include "jet-supervision-helm-chart.fullname" . }}-web
 spec:
   entryPoints:
     - web
+  routes:
+    {{- range $rules }}
+    - match: {{ . }}
+      kind: Rule
+      services:
+        - name: {{ include "jet-supervision-helm-chart.fullname" $ }}
+          port: 80
+      {{- include "web-middlewares" $ | nindent 6 }}
+    {{- end }}
+
+---
+
+{{- if .Values.supervisionTLSSecret | empty | not }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "jet-supervision-helm-chart.fullname" . }}-websecure
+spec:
+  entryPoints:
     - websecure
   routes:
-    - match: Host(`{{ .Values.supervisionHost }}`) && PathPrefix(`{{ .Values.baseUrl }}`)
+    {{- range $rules }}
+    - match: {{ . }}
       kind: Rule
-      middlewares:
-        - name: {{ include "jet-supervision-helm-chart.fullname" . }}-compress
       services:
-        - name: {{ include "jet-supervision-helm-chart.fullname" . }}
+        - name: {{ include "jet-supervision-helm-chart.fullname" $ }}
           port: 80
-    - match: Host(`{{ .Values.supervisionHost }}`) && PathPrefix(`/jet-supervision`)
-      kind: Rule
       middlewares:
-        - name: {{ include "jet-supervision-helm-chart.fullname" . }}-compress
-        - name: {{ include "jet-supervision-helm-chart.fullname" . }}-strip-prefix
-      services:
-        - name: {{ include "jet-supervision-helm-chart.fullname" . }}
-          port: 80
-{{- include "jet-supervision-helm-chart.tls-options" . | nindent 2 }}
+        - name: {{ include "jet-supervision-helm-chart.fullname" $ }}-strip-prefix
+        - name: {{ include "jet-supervision-helm-chart.fullname" $ }}-compress
+      tls: {}
+    {{- end }}
+  tls:
+    secretName: {{ include "jet-supervision-helm-chart.fullname" $ }}-tls-secret
+{{- end }}

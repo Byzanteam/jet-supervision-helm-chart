@@ -45,3 +45,14 @@ make install
 # set release-name
 make install RELEASE=gxzh
 ```
+
+## HowTo
+
+### Setup TLS
+```yaml
+# values.local.yaml
+
+supervisionTLSSecret:
+  certificate: base64 encoded certificate-file
+  key: base64 encoded key-file
+```
