@@ -6,5 +6,9 @@ metadata:
     {{- include "jet-supervision-helm-chart.labels" . | nindent 4 }}
 data:
   action-list.env: |-
-{{ .Files.Get "action-list.env" | indent 4 }}
+    {{- range $line := .Files.Lines "action-list.env" }}
+    {{- if not (hasPrefix "#" $line) }}
+    {{ $line }}
+    {{- end }}
+    {{- end }}
 
