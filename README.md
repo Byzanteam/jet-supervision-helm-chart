@@ -9,19 +9,31 @@ cp action-list.example.env action-list.env
 Modify `action-list.env` as needed.
 
 ### make `values.local.yaml`
+1. set imageCredentials for image pulling
+```yaml
+# values.local.yaml
+imageCredentials:
+  registry: registry.cn-hangzhou.aliyuncs.com
+  username: deploy-man@skylark
+  password: changeit
+```
+
+2. set image info for image pulling
 ```yaml
 # values.local.yaml
 
 image:
-  registry: registry.ap-northeast-1.aliyuncs.com
   repository: jet-app/supervision-gxzh
   tag: "latest"
-  imagePullSecrets: []
   pullPolicy: IfNotPresent
+```
+
+3. set host and environments for supervision
+```yaml
+# values.local.yaml
 
 # Application
 supervisionHost: supervision.jet.localhost
-supervisionTLSSecret:
 
 # Frontend environments
 baseUrl: /

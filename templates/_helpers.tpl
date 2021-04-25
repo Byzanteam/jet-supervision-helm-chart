@@ -54,7 +54,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Return the proper image name
 */}}
 {{- define "jet-supervision-helm-chart.image" }}
-{{- $registryName := .Values.image.registry -}}
+{{- $registryName := .Values.imageCredentials.registry -}}
 {{- $repositoryName := .Values.image.repository -}}
 {{- $tag := .Values.image.tag | toString -}}
 {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}

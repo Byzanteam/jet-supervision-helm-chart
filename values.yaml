@@ -2,15 +2,19 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-image:
-  registry: registry.ap-northeast-1.aliyuncs.com
-  repository: jet-app/supervision-gxzh
-  tag: "latest"
-  imagePullSecrets: []
-  pullPolicy: IfNotPresent
-
 nameOverride: ""
 fullnameOverride: ""
+
+imageCredentials:
+  registry: registry.cn-hangzhou.aliyuncs.com
+  username: deploy-man@skylark
+  password: changeit
+  email: dev@byzan.team
+
+image:
+  repository: jet/jet-supervision-app
+  tag: "latest"
+  pullPolicy: IfNotPresent
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
