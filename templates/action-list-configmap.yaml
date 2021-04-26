@@ -5,10 +5,14 @@ metadata:
   labels:
     {{- include "jet-supervision-helm-chart.labels" . | nindent 4 }}
 data:
-  action-list.env: |-
-    {{- range $line := .Files.Lines "action-list.env" }}
-    {{- if not (hasPrefix "#" $line) }}
-    {{ $line }}
-    {{- end }}
-    {{- end }}
+  {{- range $line := .Files.Lines "action-list.env" }}
+  {{- if not (hasPrefix "#" $line) }}
 
+  {{- $kv := splitList "=" $line -}}
+  {{- $k := first $kv -}}
+  {{- if $k }}
+    {{ $k }}: {{ last $kv | quote }}
+  {{- end }}
+
+  {{- end }}
+  {{- end }}
