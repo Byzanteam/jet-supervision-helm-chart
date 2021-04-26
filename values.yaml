@@ -40,3 +40,4 @@ baseUrl: /
 sentryDsn: ""
 jetHost: workflow.jet.work
 jetSSL: true
+actionList:

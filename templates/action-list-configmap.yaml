@@ -5,14 +5,14 @@ metadata:
   labels:
     {{- include "jet-supervision-helm-chart.labels" . | nindent 4 }}
 data:
-  {{- range $line := .Files.Lines "action-list.env" }}
-  {{- if not (hasPrefix "#" $line) }}
+  {{- $binary := required "Please set `actionList` in `values.local.yaml`" .Values.actionList }}
 
-  {{- $kv := splitList "=" $line -}}
-  {{- $k := first $kv -}}
-  {{- if $k }}
-    {{ $k }}: {{ last $kv | quote }}
+  {{- range $line := mustRegexSplit "\n" $binary -1  }}
+  {{- $line = nospace $line }}
+  {{- if and (not (hasPrefix "#" $line)) ($line | empty | not) }}
+
+  {{- $kv := mustRegexSplit "=" $line 2 }}
+  {{ $kv | first }}: {{ $kv | last }}
   {{- end }}
 
-  {{- end }}
   {{- end }}
