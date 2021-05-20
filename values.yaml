@@ -38,6 +38,7 @@ supervisionTLSSecret:
 applicationName: 督查督办
 baseUrl: /
 sentryDsn: ""
+sentryRelease: ""
 jetHost: workflow.jet.work
 jetSSL: true
 actionList:
