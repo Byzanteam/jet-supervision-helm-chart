@@ -8,5 +8,6 @@ data:
   APPLICATION_NAME: {{ .Values.applicationName }}
   BASE_URL: {{ .Values.baseUrl }}
   SENTRY_DSN: {{ .Values.sentryDsn | quote }}
+  SENTRY_RELEASE: {{ .Values.sentryRelease | quote }}
   HOST: {{ .Values.jetHost }}
   SSL: {{ .Values.jetSSL | quote }}

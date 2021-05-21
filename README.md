@@ -31,7 +31,6 @@ supervisionHost: supervision.jet.localhost
 
 # Frontend environments
 baseUrl: /
-sentryDsn: ""
 jetHost: workflow.jet.work
 jetSSL: true
 
@@ -148,4 +147,12 @@ make install RELEASE=gxzh
 supervisionTLSSecret:
   certificate: base64 encoded certificate-file
   key: base64 encoded key-file
+```
+
+### Setup Sentry
+```yaml
+# values.local.yaml
+
+sentryDsn: "sentry-dsn"
+sentryRelease: "unique-release-name"
 ```
