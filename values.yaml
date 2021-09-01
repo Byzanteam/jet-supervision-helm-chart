@@ -36,10 +36,9 @@ supervisionTLSSecret:
 
 # Frontend environments
 applicationName: 督查督办
+jetEndpoint: https://jet.work
 subpath: /
 baseUrl: /
 sentryDsn: ""
 sentryRelease: ""
-jetHost: workflow.jet.work
-jetSSL: true
 actionList:

@@ -31,8 +31,7 @@ supervisionHost: supervision.jet.localhost
 
 # Frontend environments
 baseUrl: /
-jetHost: workflow.jet.work
-jetSSL: true
+jetEndpoint: https://workflow.jet.work
 
 ```
 
