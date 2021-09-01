@@ -36,6 +36,7 @@ supervisionTLSSecret:
 
 # Frontend environments
 applicationName: 督查督办
+subpath: /
 baseUrl: /
 sentryDsn: ""
 sentryRelease: ""

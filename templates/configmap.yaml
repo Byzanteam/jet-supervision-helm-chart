@@ -6,7 +6,7 @@ metadata:
     {{- include "jet-supervision-helm-chart.labels" . | nindent 4 }}
 data:
   APPLICATION_NAME: {{ .Values.applicationName }}
-  BASE_URL: {{ .Values.baseUrl }}
+  BASE_URL: {{ include "jet-supervision-helm-chart.app-path" . }}
   SENTRY_DSN: {{ .Values.sentryDsn | quote }}
   SENTRY_RELEASE: {{ .Values.sentryRelease | quote }}
   HOST: {{ .Values.jetHost }}
