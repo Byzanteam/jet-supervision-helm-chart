@@ -5,4 +5,5 @@ metadata:
 spec:
   stripPrefix:
     prefixes:
-      - "/jet-supervision"
+      - {{ include "jet-supervision-helm-chart.app-path" . }}
+      - {{ include "jet-supervision-helm-chart.assets-path" . }}

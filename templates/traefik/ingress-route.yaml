@@ -1,10 +1,8 @@
 {{- $rules := list }}
-{{- $rules = append $rules (printf "Host(`%s`) && PathPrefix(`%s`)" .Values.supervisionHost .Values.baseUrl) }}
-{{- $rules = append $rules (printf "Host(`%s`) && PathPrefix(`/jet-supervision`)" .Values.supervisionHost) }}
+{{- $rules = append $rules (printf "Host(`%s`) && PathPrefix(`%s`)" .Values.supervisionHost (include "jet-supervision-helm-chart.app-path" .)) }}
+{{- $rules = append $rules (printf "Host(`%s`) && PathPrefix(`%s`)" .Values.supervisionHost (include "jet-supervision-helm-chart.assets-path" .)) }}
 
-{{/*
-Return the common middlewares for web ingress-routes
-*/}}
+{{/* Middlewares for web ingress-routes */}}
 {{- define "web-middlewares" -}}
 middlewares:
 {{- if .Values.supervisionTLSSecret | empty }}
