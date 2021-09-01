@@ -3,15 +3,17 @@
 {{- $rules = append $rules (printf "Host(`%s`) && PathPrefix(`%s`)" .Values.supervisionHost (include "jet-supervision-helm-chart.assets-path" .)) }}
 
 {{/* Middlewares for web ingress-routes */}}
-{{- define "web-middlewares" -}}
-middlewares:
-{{- if .Values.supervisionTLSSecret | empty }}
-  - name: {{ include "jet-supervision-helm-chart.fullname" . }}-strip-prefix
-  - name: {{ include "jet-supervision-helm-chart.fullname" . }}-compress
-{{- else }}
-  - name: {{ include "jet-supervision-helm-chart.fullname" . }}-redirect-to-https
+{{- $webMiddlewares := list }}
+{{- $webMiddlewares = append $webMiddlewares "strip-prefix" }}
+{{- $webMiddlewares = append $webMiddlewares "compress" }}
+{{- if .Values.aircrewTLSSecret | empty | not }}
+{{- $webMiddlewares = append $webMiddlewares "redirect-to-https" }}
 {{- end }}
-{{- end }}
+
+{{/* Middlewares for websecure ingress-routes */}}
+{{- $websecureMiddlewares := list }}
+{{- $websecureMiddlewares = append $webMiddlewares "strip-prefix" }}
+{{- $websecureMiddlewares = append $webMiddlewares "compress" }}
 
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -27,7 +29,10 @@ spec:
       services:
         - name: {{ include "jet-supervision-helm-chart.fullname" $ }}
           port: 80
-      {{- include "web-middlewares" $ | nindent 6 }}
+      middlewares:
+        {{- range $webMiddlewares }}
+        - name: {{ include "jet-supervision-helm-chart.fullname" $ }}-{{ . }}
+        {{- end}}
     {{- end }}
 
 ---
@@ -48,8 +53,9 @@ spec:
         - name: {{ include "jet-supervision-helm-chart.fullname" $ }}
           port: 80
       middlewares:
-        - name: {{ include "jet-supervision-helm-chart.fullname" $ }}-strip-prefix
-        - name: {{ include "jet-supervision-helm-chart.fullname" $ }}-compress
+        {{- range $websecureMiddlewares }}
+        - name: {{ include "jet-supervision-helm-chart.fullname" $ }}-{{ . }}
+        {{- end}}
       tls: {}
     {{- end }}
   tls:
