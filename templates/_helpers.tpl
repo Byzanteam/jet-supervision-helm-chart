@@ -69,6 +69,5 @@ Return the proper image name
 
 {{/* Return the assets path */}}
 {{- define "jet-supervision-helm-chart.assets-path" }}
-{{- $subpath := default "/" .Values.subpath -}}
-{{- printf "%s/supervision" $subpath | clean -}}
+{{- printf "/jet/supervision" | clean -}}
 {{- end }}
